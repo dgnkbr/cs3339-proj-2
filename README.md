@@ -9,9 +9,9 @@ MIPS binary in a text file.
 # Output
 Dissasembled MIPS code and Simulation
 # Use
-Requires MIPS binary as arg: 	-i [BINARY_FILE.TXT]
+Requires MIPS binary as arg: 	-i "BINARY_FILE.TXT"
 
-Requires output as arg:		-o [DISSASEMBLED_MIPS_FILE_NAME]
+Requires output as arg:		-o "DISSASEMBLED_MIPS_FILE_NAME"
 
 (will create DISSASEMBLED_MIPS_FILE_NAME_dis.txt and  DISSASEMBLED_MIPS_FILE_NAME_sim.txt)
 # Optional Args:
