@@ -4,7 +4,7 @@ Updated for Python 3.
 
 Disassembles MIPS binary and oputputs a simulation of states and a full dissasembly of binary and memory.
 # Input
-Mips binary in a text file.
+MIPS binary in a text file.
 # Output
 Dissasembled MIPS code and Simulation
 # Use
