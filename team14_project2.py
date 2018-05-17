@@ -39,12 +39,12 @@ pcDict = {}
 # verbose flag; enables verbose memory output
 verbose = False
 for i in range(len(sys.argv)):
-	if sys.argv[i] == ("-v" or "-verbose") and i < (len(sys.argv) - 1):
+	if sys.argv[i] == ("-v" or "-verbose"):
 		verbose = True
 # global debug bool; turns on various debug lines
 debug = False
 for i in range(len(sys.argv)):
-	if sys.argv[i] == ("-d" or "-debug") and i < (len(sys.argv) - 1):
+	if sys.argv[i] == ("-d" or "-debug"):
 		debug = True
 
 class main():
@@ -346,8 +346,6 @@ class main():
 				pc = pc + 4
 			def statePrint():
 				print ("=====================")
-				#TODO: change like stateWrite so less than 8 mem elements prints
-				#TODO: enable verbose flag in printing
 				print ('cycle:'+str(c)+'\t'+str(pc)+'\t'+'\n')
 				print ("registers:")
 				for x in range(4):
