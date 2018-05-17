@@ -39,12 +39,12 @@ pcDict = {}
 # verbose flag; enables verbose memory output
 verbose = False
 for i in range(len(sys.argv)):
-	if sys.argv[i] == ("-v" or "-verbose") and i < (len(sys.argv) - 1):
+	if sys.argv[i] == ("-v" or "-verbose"):
 		verbose = True
 # global debug bool; turns on various debug lines
 debug = False
 for i in range(len(sys.argv)):
-	if sys.argv[i] == ("-d" or "-debug") and i < (len(sys.argv) - 1):
+	if sys.argv[i] == ("-d" or "-debug"):
 		debug = True
 
 class main():
@@ -346,30 +346,51 @@ class main():
 				pc = pc + 4
 			def statePrint():
 				print ("=====================")
-				#TODO: needs to change according to what type of instruction?
-				#TODO: change like stateWrite so less than 8 mem elements prints
-				#TODO: enable verbose flag in printing
 				print ('cycle:'+str(c)+'\t'+str(pc)+'\t'+'\n')
 				print ("registers:")
 				for x in range(4):
-					print ("r" + str(x * 8).zfill(2) + ":\t",)
+					print ("r" + str(x * 8).zfill(2) + ":\t",end='')
 					for y in range(8):
 						# removes brackets from sublists while printing str representation of list
-						print (str(registers[y + x * 8]).replace('[', '').replace(']', ''),)
+						print (str(registers[y + x * 8]).replace('[', '').replace(']', ''),end='')
 						if y < 7:
-							print ('\t',)
+							print ('\t',end='')
 						else:
 							print()
 				print ("\ndata:")
-				for x in range(len(mem)/8):
-					print (str(memStart + (x * 8*4)) + ':\t',)
-					for y in range(8):
-						print (str(mem[y + x * 8]).replace('[', '').replace(']', ''),)
-						if y < 7:
-							print ('\t',)
+				# if less then 8 elements, set length to 1 to print first z ( next loop ) elements
+				length = float(len(mem))/float(8)
+				if length > 0 and length < 1:
+					length = 1
+				for x in range(int(length)):
+					# if memory is blank, do not show line; to match with expected output
+					# can be enabled/disabled by -verbose (-v) flag
+					if not verbose:
+						empty = True
+						# check to see if all 8 bytes are 0
+						for e in mem[0+(8*x):7+(8*x)]:
+							if e != 0:
+								empty = False
+						if not empty:
+							print(str(memStart + (x * 8 * 4)).zfill(3) + ':\t', end='')
+					else:
+						print(str(memStart + (x * 8 * 4)).zfill(3) + ':\t', end='')
+					# if less than 8 elements, only print first z elements
+					z = 0
+					if len(mem) < 8:
+						z = len(mem)
+					else:
+						z = 8
+					for y in range(z):
+						if not verbose:
+							if empty:
+								break
+						print(str(mem[y + x * 8]).replace('[', '').replace(']', ''), end='')
+						if y < (z-1):
+							print('\t', end='')
 						else:
-							print()
-				print
+							print
+					print('\n',end='')
 				return
 			def stateWrite():
 				file2.write("\nregisters:\n")
@@ -740,5 +761,4 @@ if debug:
 	print ("|\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\|//////////////////////////////////////////////////////|\n\n")
 pc = 96
 main().simulate()
-
 quit(0)
