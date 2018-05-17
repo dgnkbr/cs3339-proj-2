@@ -341,7 +341,7 @@ class main():
 				print (pcDict)
 			c = 1
 			instr = 0
-			if opcode[instr] == '':
+			if opcode[int(instr)] == '':
 				instr = instr + 1
 				pc = pc + 4
 			def statePrint():
@@ -421,10 +421,10 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				imm = int(arg1Bin[instr] + arg2Bin[instr] + arg3Bin[instr] + shift[instr] + func[instr], 2)
+				imm = int(arg1Bin[int(instr)] + arg2Bin[int(instr)] + arg3Bin[int(instr)] + shift[int(instr)] + func[int(instr)], 2)
 				# bitshit immediate value 2
 				imm <<= 2
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + '#' + str(imm) + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + '#' + str(imm) + '\n')
 
 				pc = imm
 				instr = (pc - 96)/4
@@ -432,10 +432,11 @@ class main():
 			def jr():
 				global pc, instr
 
-				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg1[instr] + '\n')
 
-				destAddr = int(arg1[instr].replace('R', ''))
+				file2.write("=====================\n")
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg1[int(instr)] + '\n')
+
+				destAddr = int(arg1[int(instr)].replace('R', ''))
 				pc = registers[destAddr]
 				instr = (pc - 96)/4
 				return
@@ -444,13 +445,13 @@ class main():
 
 				file2.write("=====================\n")
 				file2.write(
-					'cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg1[instr] + ', #' + str(
-						int(arg3[instr]) * 4) + '\n')
+					'cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg1[int(instr)] + ', #' + str(
+						int(arg3[int(instr)]) * 4) + '\n')
 
-				imm = int(arg3Bin[instr] + shift[instr] + func[instr], 2)
+				imm = int(arg3Bin[int(instr)] + shift[int(instr)] + func[int(instr)], 2)
 
-				src1 = registers[int(arg1[instr].replace('R', ''))]
-				src2 = registers[int(arg2[instr].replace('R', ''))]
+				src1 = registers[int(arg1[int(instr)].replace('R', ''))]
+				src2 = registers[int(arg2[int(instr)].replace('R', ''))]
 
 				dest = imm
 				if src1 != src2:
@@ -464,11 +465,11 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg1[instr] + ', #' + str(int(arg3[instr]) * 4) + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg1[int(instr)] + ', #' + str(int(arg3[int(instr)]) * 4) + '\n')
 
-				imm = int(arg3Bin[instr] + shift[instr] + func[instr], 2)
+				imm = int(arg3Bin[int(instr)] + shift[int(instr)] + func[int(instr)], 2)
 
-				src = registers[int(arg1[instr].replace('R', ''))]
+				src = registers[int(arg1[int(instr)].replace('R', ''))]
 				dest = imm
 				if src <= 0:
 					pc = pc + 4 + (4 * dest)
@@ -481,11 +482,11 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg3[instr] + ', ' + arg1[instr] + ', ' + arg2[instr] + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg3[int(instr)] + ', ' + arg1[int(instr)] + ', ' + arg2[int(instr)] + '\n')
 
-				src1Reg = int(arg1[instr].replace('R', ''))
-				src2Reg = int(arg2[instr].replace('R', ''))
-				destReg = int(arg3[instr].replace('R', ''))
+				src1Reg = int(arg1[int(instr)].replace('R', ''))
+				src2Reg = int(arg2[int(instr)].replace('R', ''))
+				destReg = int(arg3[int(instr)].replace('R', ''))
 				registers[destReg] = registers[src1Reg] + registers[src2Reg]
 				pc = pc + 4
 				instr = instr + 1
@@ -494,11 +495,11 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg2[instr] + ', ' + arg1[instr] + ', #' + arg3[instr] + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg2[int(instr)] + ', ' + arg1[int(instr)] + ', #' + arg3[int(instr)] + '\n')
 				
-				srcReg = int(arg1[instr].replace('R', ''))
-				destReg = int(arg2[instr].replace('R', ''))
-				imm = int(arg3[instr])
+				srcReg = int(arg1[int(instr)].replace('R', ''))
+				destReg = int(arg2[int(instr)].replace('R', ''))
+				imm = int(arg3[int(instr)])
 				registers[destReg] = registers[srcReg] + imm
 				pc = pc + 4
 				instr = instr + 1
@@ -507,11 +508,11 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) +'\t' + opcode[instr] + '\t' + arg3[instr] + ', ' + arg1[instr] + ', ' + arg2[instr] + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) +'\t' + opcode[int(instr)] + '\t' + arg3[int(instr)] + ', ' + arg1[int(instr)] + ', ' + arg2[int(instr)] + '\n')
 
-				destReg = int(arg3[instr].replace('R', ''))
-				src1Reg = int(arg1[instr].replace('R', ''))
-				src2Reg = int(arg2[instr].replace('R', ''))
+				destReg = int(arg3[int(instr)].replace('R', ''))
+				src1Reg = int(arg1[int(instr)].replace('R', ''))
+				src2Reg = int(arg2[int(instr)].replace('R', ''))
 				registers[destReg] = registers[src1Reg] - registers[src2Reg]
 				pc = pc + 4
 				instr = instr + 1
@@ -520,16 +521,16 @@ class main():
 				global pc, instr, mem
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) +'\t' + opcode[instr] + '\t' + arg2[instr] + ', ' + arg3[instr] + '(' + arg1[instr] + ')' + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) +'\t' + opcode[int(instr)] + '\t' + arg2[int(instr)] + ', ' + arg3[int(instr)] + '(' + arg1[int(instr)] + ')' + '\n')
 
-				destAddress = int(arg3[instr].replace('R', ''))
-				destAddress += registers[int(arg1[instr].replace('R', ''))]
-				src = int(arg2[instr].replace('R', ''))
+				destAddress = int(arg3[int(instr)].replace('R', ''))
+				destAddress += registers[int(arg1[int(instr)].replace('R', ''))]
+				src = int(arg2[int(instr)].replace('R', ''))
 				# allocate memory if needed
 				if len(mem) == 0:
 					for x in range(((destAddress - memStart) / 4) + 8):
 						mem.append(0)
-				mem[(destAddress-memStart)/4] = int(registers[src])
+				mem[int((destAddress-memStart)/4)] = int(registers[src])
 				pc = pc + 4
 				instr = instr + 1
 				return
@@ -537,12 +538,12 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg2[instr] + ', ' + arg3[instr] + '(' + arg1[instr] + ')' + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg2[int(instr)] + ', ' + arg3[int(instr)] + '(' + arg1[int(instr)] + ')' + '\n')
 
-				destReg = int(arg2[instr].replace('R', ''))
-				srcAddress = int(arg3[instr].replace('R', ''))
-				srcAddress += registers[int(arg1[instr].replace('R', ''))]
-				registers[destReg] = mem[(srcAddress-memStart) / 4]
+				destReg = int(arg2[int(instr)].replace('R', ''))
+				srcAddress = int(arg3[int(instr)].replace('R', ''))
+				srcAddress += registers[int(arg1[int(instr)].replace('R', ''))]
+				registers[destReg] = mem[int((srcAddress-memStart) / 4)]
 				pc = pc + 4
 				instr = instr + 1
 				return
@@ -550,11 +551,11 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				shamt = int(shift[instr], 2)
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg3[instr] + ', ' + arg2[instr] + ', #' + str(shamt) + '\n')
+				shamt = int(shift[int(instr)], 2)
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg3[int(instr)] + ', ' + arg2[int(instr)] + ', #' + str(shamt) + '\n')
 
-				destReg = int(arg3[instr].replace('R', ''))
-				srcReg = int(arg2[instr].replace('R', ''))
+				destReg = int(arg3[int(instr)].replace('R', ''))
+				srcReg = int(arg2[int(instr)].replace('R', ''))
 				registers[destReg] = registers[srcReg] << shamt
 				pc = pc + 4
 				instr = instr + 1
@@ -563,13 +564,13 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				shamt = int(shift[instr], 2)
+				shamt = int(shift[int(instr)], 2)
 				file2.write(
-					'cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg3[instr] + ', ' + arg2[
+					'cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg3[int(instr)] + ', ' + arg2[
 						instr] + ', #' + str(shamt) + '\n')
 
-				destReg = int(arg3[instr].replace('R', ''))
-				srcReg = int(arg2[instr].replace('R', ''))
+				destReg = int(arg3[int(instr)].replace('R', ''))
+				srcReg = int(arg2[int(instr)].replace('R', ''))
 				registers[destReg] = registers[srcReg] >> shamt
 				pc = pc + 4
 				instr = instr + 1
@@ -578,11 +579,11 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg3[instr] + ', ' + arg1[instr] + ', ' + arg2[instr] + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg3[int(instr)] + ', ' + arg1[int(instr)] + ', ' + arg2[int(instr)] + '\n')
 
-				src1Reg = int(arg1[instr].replace('R', ''))
-				src2Reg = int(arg2[instr].replace('R', ''))
-				destReg = int(arg3[instr].replace('R', ''))
+				src1Reg = int(arg1[int(instr)].replace('R', ''))
+				src2Reg = int(arg2[int(instr)].replace('R', ''))
+				destReg = int(arg3[int(instr)].replace('R', ''))
 				registers[destReg] = registers[src1Reg] * registers[src2Reg]
 				pc = pc + 4
 				instr = instr + 1
@@ -591,11 +592,11 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg3[instr] + ', ' + arg1[instr] + ', ' + arg2[instr] + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg3[int(instr)] + ', ' + arg1[int(instr)] + ', ' + arg2[int(instr)] + '\n')
 
-				src1 = int(arg1Bin[instr], 2)
-				src2 = int(arg2Bin[instr], 2)
-				destReg = int(arg3[instr].replace('R', ''))
+				src1 = int(arg1Bin[int(instr)], 2)
+				src2 = int(arg2Bin[int(instr)], 2)
+				destReg = int(arg3[int(instr)].replace('R', ''))
 				registers[destReg] = registers[src1] & registers[src2]
 				pc = pc + 4
 				instr = instr + 1
@@ -604,11 +605,11 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg3[instr] + ', ' + arg1[instr] + ', ' + arg2[instr] + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg3[int(instr)] + ', ' + arg1[int(instr)] + ', ' + arg2[int(instr)] + '\n')
 
-				src1 = int(arg1Bin[instr], 2)
-				src2 = int(arg2Bin[instr], 2)
-				destReg = int(arg3[instr].replace('R', ''))
+				src1 = int(arg1Bin[int(instr)], 2)
+				src2 = int(arg2Bin[int(instr)], 2)
+				destReg = int(arg3[int(instr)].replace('R', ''))
 				registers[destReg] = registers[src1] | registers[src2]
 				pc = pc + 4
 				instr = instr + 1
@@ -618,12 +619,12 @@ class main():
 
 				file2.write("=====================\n")
 				file2.write(
-					'cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg3[instr] + ', ' + arg1[
-						instr] + ', ' + arg2[instr] + '\n')
+					'cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg3[int(instr)] + ', ' + arg1[
+						instr] + ', ' + arg2[int(instr)] + '\n')
 
-				src1 = int(arg1Bin[instr], 2)
-				src2 = int(arg2Bin[instr], 2)
-				destReg = int(arg3[instr].replace('R', ''))
+				src1 = int(arg1Bin[int(instr)], 2)
+				src2 = int(arg2Bin[int(instr)], 2)
+				destReg = int(arg3[int(instr)].replace('R', ''))
 				registers[destReg] = registers[src1] ^ registers[src2]
 				pc = pc + 4
 				instr = instr + 1
@@ -632,11 +633,11 @@ class main():
 				global pc, instr
 
 				file2.write("=====================\n")
-				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[instr] + '\t' + arg3[instr] + ', ' + arg1[instr] + ', ' + arg2[instr] + '\n')
+				file2.write('cycle:' + str(c) + '\t' + str(pc) + '\t' + opcode[int(instr)] + '\t' + arg3[int(instr)] + ', ' + arg1[int(instr)] + ', ' + arg2[int(instr)] + '\n')
 
-				destReg = int(arg3[instr].replace('R', ''))
-				cmpReg = int(arg2[instr].replace('R', ''))
-				srcReg = int(arg1[instr].replace('R', ''))
+				destReg = int(arg3[int(instr)].replace('R', ''))
+				cmpReg = int(arg2[int(instr)].replace('R', ''))
+				srcReg = int(arg1[int(instr)].replace('R', ''))
 				if registers[cmpReg] == 0:
 					registers[destReg] = registers[srcReg]
 				pc = pc + 4
@@ -678,16 +679,16 @@ class main():
 			# while not break instruction, simulate through instructions
 			# exit loop on break instruction
 			while (1):
-				if opcode[instr] == 'BREAK':
+				if opcode[int(instr)] == 'BREAK':
 					breakInstr()
 					stateWrite()
 					if debug:
 						statePrint()
 					break
-				if opcode[instr] == '':
+				if opcode[int(instr)] == '':
 					instr = instr + 1
 					pc = pc + 4
-				instruction[opcode[instr]]()
+				instruction[opcode[int(instr)]]()
 				stateWrite()
 				if debug:
 					statePrint()
