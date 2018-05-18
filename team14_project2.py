@@ -2,8 +2,8 @@
 # Disassembles MIPS binary and simulates through code
 # Input: Mips binary
 # Output: Dissasembled MIPS code and Simulation
-# Requires MIPS binary as arg: 	-i [BINARY_FILE.TXT]
-# Requires output as arg:		-o [DISSASEMBLED_MIPS_FILE_NAME]
+# Requires MIPS binary as arg: 	-i "BINARY_FILE.TXT"
+# Requires output as arg:		-o "DISSASEMBLED_MIPS_FILE_NAME"
 #	 (will create DISSASEMBLED_MIPS_FILE_NAME_dis.txt and  DISSASEMBLED_MIPS_FILE_NAME_sim.txt)
 # Optional Args:
 #	-v OR -verbose: Enables verbose memory output
